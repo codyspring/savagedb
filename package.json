@@ -1,0 +1,23 @@
+{
+  "name": "savagedb",
+  "version": "0.0.0",
+  "description": "In memory datastore with flat file persistence.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/playsavage/savagedb.git"
+  },
+  "author": "Cody Spring <codyspring@me.com> (https://codyspring.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/playsavage/savagedb/issues"
+  },
+  "homepage": "https://github.com/playsavage/savagedb#readme",
+  "engineStrict": true,
+  "engines": {
+    "node": ">6.0.0"
+  }
+}

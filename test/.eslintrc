@@ -1,0 +1,14 @@
+{
+  "plugins": [
+    "mocha"
+  ],
+  "rules": {
+    "import/no-extraneous-dependencies": "off",
+    "func-names": "off",
+    "prefer-arrow-callback": "off"
+  },
+  "globals": {
+    "describe": true,
+    "it": true
+  }
+}
