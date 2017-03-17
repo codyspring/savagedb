@@ -31,6 +31,7 @@
     "mocha": "^3.2.0"
   },
   "dependencies": {
-    "aproba": "^1.1.1"
+    "aproba": "^1.1.1",
+    "randomstring": "^1.1.5"
   }
 }
