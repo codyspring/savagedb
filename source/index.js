@@ -1,6 +1,8 @@
 const datastore = {}; // This is it.
+const mkdirp = require('mkdirp');
 const persist = require('./persist');
 
+mkdirp('./data');
 let defaultDb = 'default';
 
 const events = require('./events');
@@ -12,6 +14,7 @@ function createDatabase(name) {
     Collection()
   );
   events.emit('database-created', name);
+  persist.loadData(datastore[name]);
   return datastore[name];
 }
 
