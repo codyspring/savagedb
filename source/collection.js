@@ -14,13 +14,19 @@ const Insert = function Insert(data) {
   return doc;
 };
 
+const Delete = function Delete(id) {
+  validate('S', [id]);
+  delete this[id];
+};
+
 module.exports = () => Object.assign({}, {
   collection: function collection(name) {
     validate('S', [name]);
 
     if (!this.data[name]) {
       this.data[name] = Object.assign({}, {
-        insert: Insert
+        insert: Insert,
+        delete: Delete
       });
     }
 
