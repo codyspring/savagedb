@@ -14,6 +14,13 @@ const Insert = function Insert(data) {
   return doc;
 };
 
+const Update = function Update(id, data) {
+  validate('SO', [id, data]);
+  if (!this[id]) return null;
+  this[id] = Object.assign({}, this[id], data);
+  return this[id];
+};
+
 const Delete = function Delete(id) {
   validate('S', [id]);
   delete this[id];
@@ -26,6 +33,7 @@ module.exports = () => Object.assign({}, {
     if (!this.data[name]) {
       this.data[name] = Object.assign({}, {
         insert: Insert,
+        update: Update,
         delete: Delete
       });
     }
