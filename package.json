@@ -1,6 +1,6 @@
 {
   "name": "savagedb",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "In memory datastore with flat file persistence.",
   "main": "source/index.js",
   "scripts": {
