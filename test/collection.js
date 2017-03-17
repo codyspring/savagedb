@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
-const Collection = require('../source/collection');
+const database = require('../source');
 
-const mockDb = Object.assign({}, { name: 'test', data: [] }, Collection());
+const mockDb = database('mock');
 const mockCollection = mockDb.collection('test');
 
 describe('collection', function () {

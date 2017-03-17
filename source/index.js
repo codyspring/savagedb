@@ -1,14 +1,17 @@
 const datastore = {}; // This is it.
+const persist = require('./persist');
 
 let defaultDb = 'default';
 
+const events = require('./events');
 const Collection = require('./collection');
 
 function createDatabase(name) {
   datastore[name] = Object.assign(
-    { data: {} },
+    { meta: { name }, data: {} },
     Collection()
   );
+  events.emit('database-created', name);
   return datastore[name];
 }
 
