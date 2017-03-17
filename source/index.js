@@ -17,4 +17,8 @@ const main = (name) => {
   return createDatabase(name);
 };
 
+main.setDefault = (name) => {
+  defaultDb = name;
+};
+
 module.exports = main;
