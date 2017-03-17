@@ -1,5 +1,5 @@
 {
-  "name": "savagedb",
+  "name": "@playsavage/savagedb",
   "version": "0.1.0",
   "description": "In memory datastore with flat file persistence.",
   "main": "source/index.js",
