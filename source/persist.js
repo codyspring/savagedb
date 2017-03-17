@@ -40,3 +40,27 @@ events.subscribe('document-updated', (data) => {
 events.subscribe('document-deleted', (data) => {
   fs.unlink(`./data/${data.database}/${data.collection}/${data.document}.yaml`);
 });
+
+// Syncronously loads data into memory if it exists.
+exports.loadData = (db) => {
+  // Bail if we don't have a folder for this db.
+  try {
+    fs.statSync(`./data/${db.meta.name}`);
+  } catch (error) {
+    return;
+  }
+
+  const collections = fs.readdirSync(`./data/${db.meta.name}`);
+
+  for (let i = 0; i < collections.length; i += 1) {
+    const collection = db.collection(collections[i], true);
+    const documents = fs.readdirSync(`./data/${db.meta.name}/${collections[i]}`);
+
+    for (let k = 0; k < documents.length; k += 1) {
+      const doc = yaml.safeLoad(
+        fs.readFileSync(`./data/${db.meta.name}/${collections[i]}/${documents[k]}`)
+      );
+      collection.insert(doc, true);
+    }
+  }
+};
