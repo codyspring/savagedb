@@ -9,4 +9,11 @@ describe('database', function () {
     expect(db).to.have.ownProperty('data');
     expect(db.data).to.deep.equal({});
   });
+
+  describe('#setDefault()', function () {
+    it('should set the default database so future unnamed calls return it', function () {
+      database.setDefault('test');
+      const newDb = database();
+    });
+  });
 });
