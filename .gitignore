@@ -113,3 +113,9 @@ typings/
 
 # dotenv environment variables file
 # .env
+
+
+
+##### APP #####
+data
+demo.js
