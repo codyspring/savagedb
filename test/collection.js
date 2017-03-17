@@ -42,4 +42,21 @@ describe('collection', function () {
       expect(mockCollection[newDoc.id]).to.deep.equal(newDoc);
     });
   });
+
+  describe('#delete()', function () {
+    it('should error when no id is supplied', function (done) {
+      try {
+        mockCollection.delete();
+        done('no error thrown');
+      } catch (error) {
+        done();
+      }
+    });
+
+    it('should delete an object by id', function () {
+      const doc = mockCollection.insert({ foo: 'bar' });
+      mockCollection.delete(doc.id);
+      expect(mockCollection[doc.id]).to.not.exist; // eslint-disable-line no-unused-expressions
+    });
+  });
 });
