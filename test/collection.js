@@ -59,4 +59,23 @@ describe('collection', function () {
       expect(mockCollection[doc.id]).to.not.exist; // eslint-disable-line no-unused-expressions
     });
   });
+
+  describe('#update()', function () {
+    it('should error when id and data isn\'t supplied', function (done) {
+      try {
+        mockCollection.update();
+        done('no error thrown');
+      } catch (error) {
+        done();
+      }
+    });
+
+    it('should update an object by id', function () {
+      let doc = mockCollection.insert({ foo: 'bar' });
+      expect(doc.foo).to.equal('bar');
+
+      doc = mockCollection.update(doc.id, { foo: 'baz' });
+      expect(doc.foo).to.equal('baz');
+    });
+  });
 });
