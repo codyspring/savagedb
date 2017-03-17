@@ -43,6 +43,27 @@ describe('collection', function () {
     });
   });
 
+  describe('#read()', function () {
+    it('should return all documents when no argument is passed', function () {
+      mockCollection.insert({ foo1: 'bar1' });
+      mockCollection.insert({ foo2: 'bar2' });
+      const docs = mockCollection.read();
+      expect(docs).to.be.an('array');
+      expect(docs.length).to.be.at.least(2);
+    });
+
+    it('should return a single document when an id is passed', function () {
+      const doc = mockCollection.insert({ foo: 'bar' });
+      const again = mockCollection.read(doc.id);
+      expect(again.id).to.equal(doc.id);
+    });
+
+    it('should return null when an id is passed but not in the collection', function () {
+      const doc = mockCollection.read('some-random-id');
+      expect(doc).to.equal(null);
+    });
+  });
+
   describe('#update()', function () {
     it('should error when id and data isn\'t supplied', function (done) {
       try {
