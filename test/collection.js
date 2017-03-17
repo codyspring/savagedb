@@ -43,6 +43,32 @@ describe('collection', function () {
     });
   });
 
+  describe('#update()', function () {
+    it('should error when id and data isn\'t supplied', function (done) {
+      try {
+        mockCollection.update();
+        done('no error thrown');
+      } catch (error) {
+        done();
+      }
+    });
+
+    it('should return null when no object was founf to update', function () {
+      const doc = mockCollection.update('not-here', { foo: 'baz' });
+      expect(doc).to.equal(null);
+    });
+
+    it('should update an object by id', function () {
+      let doc = mockCollection.insert({ foo: 'bar' });
+      const id = doc.id;
+      expect(doc.foo).to.equal('bar');
+
+      doc = mockCollection.update(doc.id, { foo: 'baz' });
+      expect(doc.id).to.equal(id);
+      expect(doc.foo).to.equal('baz');
+    });
+  });
+
   describe('#delete()', function () {
     it('should error when no id is supplied', function (done) {
       try {
@@ -57,25 +83,6 @@ describe('collection', function () {
       const doc = mockCollection.insert({ foo: 'bar' });
       mockCollection.delete(doc.id);
       expect(mockCollection[doc.id]).to.not.exist; // eslint-disable-line no-unused-expressions
-    });
-  });
-
-  describe('#update()', function () {
-    it('should error when id and data isn\'t supplied', function (done) {
-      try {
-        mockCollection.update();
-        done('no error thrown');
-      } catch (error) {
-        done();
-      }
-    });
-
-    it('should update an object by id', function () {
-      let doc = mockCollection.insert({ foo: 'bar' });
-      expect(doc.foo).to.equal('bar');
-
-      doc = mockCollection.update(doc.id, { foo: 'baz' });
-      expect(doc.foo).to.equal('baz');
     });
   });
 });
