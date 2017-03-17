@@ -1,7 +1,8 @@
 const expect = require('chai').expect;
+const randomstring = require('randomstring').generate;
 const database = require('../source');
 
-const mockDb = database('mock');
+const mockDb = database(randomstring());
 const mockCollection = mockDb.collection('test');
 
 describe('collection', function () {
