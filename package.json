@@ -2,7 +2,7 @@
   "name": "savagedb",
   "version": "0.0.0",
   "description": "In memory datastore with flat file persistence.",
-  "main": "index.js",
+  "main": "source/index.js",
   "scripts": {
     "test": "mocha --recursive"
   },
@@ -29,5 +29,8 @@
     "eslint-plugin-mocha": "^4.8.0",
     "eslint-plugin-react": "^6.10.0",
     "mocha": "^3.2.0"
+  },
+  "dependencies": {
+    "aproba": "^1.1.1"
   }
 }
