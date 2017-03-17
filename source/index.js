@@ -2,14 +2,17 @@ const datastore = {}; // This is it.
 
 let defaultDb = 'default';
 
+const Collection = require('./collection');
+
 function createDatabase(name) {
   datastore[name] = Object.assign(
-    { data: {} }
+    { data: {} },
+    Collection()
   );
   return datastore[name];
 }
 
-createDatabase('default');
+createDatabase(defaultDb);
 
 const main = (name) => {
   if (!name) return datastore[defaultDb];
@@ -18,6 +21,7 @@ const main = (name) => {
 };
 
 main.setDefault = (name) => {
+  if (!datastore[name]) throw Error('Database must exist to set as default');
   defaultDb = name;
 };
 
