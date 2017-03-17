@@ -3,8 +3,8 @@ const validate = require('aproba');
 const events = require('./events');
 const randomstring = require('randomstring').generate;
 
-const Insert = function Insert(data) {
-  validate('O', [data]);
+const Insert = function Insert(data, memOnly = false) {
+  validate('OB|O', [data, memOnly]);
   const doc = Object.assign({ id: randomstring() }, data);
 
   // Make sure the id is unique to the collection.
@@ -14,11 +14,13 @@ const Insert = function Insert(data) {
 
   this[doc.id] = doc;
 
-  events.emit('document-created', {
-    database: this.meta.database,
-    collection: this.meta.name,
-    document: this[doc.id]
-  });
+  if (!memOnly) {
+    events.emit('document-created', {
+      database: this.meta.database,
+      collection: this.meta.name,
+      document: this[doc.id]
+    });
+  }
   return doc;
 };
 
@@ -52,8 +54,8 @@ const Delete = function Delete(id) {
 };
 
 module.exports = () => Object.assign({}, {
-  collection: function collection(name) {
-    validate('S', [name]);
+  collection: function collection(name, memOnly = false) {
+    validate('SB|S', [name, memOnly]);
 
     if (!this.data[name]) {
       this.data[name] = Object.assign({}, {
@@ -65,7 +67,7 @@ module.exports = () => Object.assign({}, {
       });
     }
 
-    events.emit('collection-created', { db: this.meta.name, name });
+    if (!memOnly) events.emit('collection-created', { db: this.meta.name, name });
     return this.data[name];
   }
 });
