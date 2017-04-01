@@ -8,10 +8,10 @@ const Database = require('./database');
 
 Database.create(datastore, defaultDb);
 
-const main = (name) => {
+const main = (name, options = {}) => {
   if (!name) return datastore[defaultDb];
   if (datastore[name]) return datastore[name];
-  return Database.create(datastore, name);
+  return Database.create(datastore, name, options);
 };
 
 main.setDefault = (name) => {

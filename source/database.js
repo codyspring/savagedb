@@ -2,7 +2,12 @@ const events = require('./events');
 const persist = require('./persist');
 const Collection = require('./collection');
 
-const create = (datastore, name) => {
+function setPersistence(database, persistence) {
+  database.meta.persistence = 'yaml';
+  if (persistence === 'json') database.meta.persistence = persistence;
+}
+
+const create = (datastore, name, options = {}) => {
   datastore[name] = Object.assign(
     {
       meta: { name },
@@ -10,8 +15,11 @@ const create = (datastore, name) => {
     },
     Collection()
   );
-  events.emit('database-created', name);
+
+  setPersistence(datastore[name], options.persistence);
   persist.loadData(datastore[name]);
+
+  events.emit('database-created', name);
   return datastore[name];
 };
 
