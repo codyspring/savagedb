@@ -1,4 +1,5 @@
 const events = require('./events');
+const store = require('./store');
 const mkdirp = require('mkdirp');
 const fs = require('graceful-fs');
 const yaml = require('js-yaml');
@@ -22,23 +23,34 @@ events.subscribe('collection-created', (data) => {
 
 // Handle creating a document.
 events.subscribe('document-created', (data) => {
-  fs.writeFile(
-    `./data/${data.database}/${data.collection}/${data.document.id}.yaml`,
-    yaml.safeDump(data.document)
-  );
+  const file = `./data/${data.database}/${data.collection}/${data.document.id}`;
+  const fileType = store[data.database].meta.persistence;
+
+  if (fileType === 'json') {
+    fs.writeFile(`${file}.${fileType}`, JSON.stringify(data.document));
+  } else {
+    fs.writeFile(`${file}.${fileType}`, yaml.safeDump(data.document));
+  }
 });
 
 // Handle updating a document.
 events.subscribe('document-updated', (data) => {
-  fs.writeFile(
-    `./data/${data.database}/${data.collection}/${data.document.id}.yaml`,
-    yaml.safeDump(data.document)
-  );
+  const file = `./data/${data.database}/${data.collection}/${data.document.id}`;
+  const fileType = store[data.database].meta.persistence;
+
+  if (fileType === 'json') {
+    fs.writeFile(`${file}.${fileType}`, JSON.stringify(data.document));
+  } else {
+    fs.writeFile(`${file}.${fileType}`, yaml.safeDump(data.document));
+  }
 });
 
 // Handle deleting a document.
 events.subscribe('document-deleted', (data) => {
-  fs.unlink(`./data/${data.database}/${data.collection}/${data.document}.yaml`);
+  const file = `./data/${data.database}/${data.collection}/${data.document.id}`;
+  const fileType = store[data.database].meta.persistence;
+
+  fs.unlink(`${file}.${fileType}`);
 });
 
 // Syncronously loads data into memory if it exists.
@@ -55,11 +67,12 @@ exports.loadData = (db) => {
   for (let i = 0; i < collections.length; i += 1) {
     const collection = db.collection(collections[i], true);
     const documents = fs.readdirSync(`./data/${db.meta.name}/${collections[i]}`);
+    const fileType = db.meta.persistence;
 
     for (let k = 0; k < documents.length; k += 1) {
-      const doc = yaml.safeLoad(
-        fs.readFileSync(`./data/${db.meta.name}/${collections[i]}/${documents[k]}`)
-      );
+      const fileName = `./data/${db.meta.name}/${collections[i]}/${documents[k]}`;
+      const file = fs.readFileSync(fileName);
+      const doc = (fileType === 'json' ? JSON.parse(file) : yaml.safeLoad(file));
       collection.insert(doc, true);
     }
   }
