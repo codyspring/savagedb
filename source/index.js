@@ -1,4 +1,4 @@
-const datastore = {}; // This is it.
+const datastore = require('./store');
 const mkdirp = require('mkdirp');
 
 mkdirp('./data');
