@@ -1,3 +1,4 @@
+const store = require('./store');
 const events = require('./events');
 const persist = require('./persist');
 const Collection = require('./collection');
@@ -8,8 +9,8 @@ function setPersistence(database, persistence) {
   if (!persistence) database.meta.persistence = false;
 }
 
-const create = (datastore, name, options = {}) => {
-  datastore[name] = Object.assign(
+const create = (name, options = {}) => {
+  store[name] = Object.assign(
     {
       meta: { name },
       data: {}
@@ -17,13 +18,13 @@ const create = (datastore, name, options = {}) => {
     Collection()
   );
 
-  setPersistence(datastore[name], options.persistence);
-  if (datastore[name].meta.persistence) {
-    persist.loadData(datastore[name]);
+  setPersistence(store[name], options.persistence);
+  if (store[name].meta.persistence) {
+    persist.loadData(store[name]);
   }
 
   events.emit('database-created', name);
-  return datastore[name];
+  return store[name];
 };
 
 module.exports = {

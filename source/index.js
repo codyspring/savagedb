@@ -1,4 +1,4 @@
-const datastore = require('./store');
+const store = require('./store');
 const mkdirp = require('mkdirp');
 
 mkdirp('./data');
@@ -6,16 +6,16 @@ let defaultDb = 'default';
 
 const Database = require('./database');
 
-Database.create(datastore, defaultDb);
+Database.create(defaultDb);
 
 const main = (name, options = {}) => {
-  if (!name) return datastore[defaultDb];
-  if (datastore[name]) return datastore[name];
-  return Database.create(datastore, name, options);
+  if (!name) return store[defaultDb];
+  if (store[name]) return store[name];
+  return Database.create(name, options);
 };
 
 main.setDefault = (name) => {
-  if (!datastore[name]) throw Error('Database must exist to set as default');
+  if (!store[name]) throw Error('Database must exist to set as default');
   defaultDb = name;
 };
 
