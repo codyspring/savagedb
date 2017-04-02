@@ -5,6 +5,7 @@ const Collection = require('./collection');
 function setPersistence(database, persistence) {
   database.meta.persistence = 'yaml';
   if (persistence === 'json') database.meta.persistence = persistence;
+  if (!persistence) database.meta.persistence = false;
 }
 
 const create = (datastore, name, options = {}) => {
