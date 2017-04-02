@@ -18,7 +18,9 @@ const create = (datastore, name, options = {}) => {
   );
 
   setPersistence(datastore[name], options.persistence);
-  persist.loadData(datastore[name]);
+  if (datastore[name].meta.persistence) {
+    persist.loadData(datastore[name]);
+  }
 
   events.emit('database-created', name);
   return datastore[name];
