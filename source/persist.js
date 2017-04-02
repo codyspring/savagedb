@@ -13,44 +13,50 @@ events.observe('document-deleted');
 
 // Handle a database being created.
 events.subscribe('database-created', (name) => {
-  mkdirp(`./data/${name}`);
+  if (store[name].meta.persistence) mkdirp(`./data/${name}`);
 });
 
 // Handle creating a collection.
 events.subscribe('collection-created', (data) => {
-  mkdirp(`./data/${data.db}/${data.name}`);
+  if (store[data.db].meta.persistence) mkdirp(`./data/${data.db}/${data.name}`);
 });
 
 // Handle creating a document.
 events.subscribe('document-created', (data) => {
-  const file = `./data/${data.database}/${data.collection}/${data.document.id}`;
-  const fileType = store[data.database].meta.persistence;
+  if (store[data.database].meta.persistence) {
+    const file = `./data/${data.database}/${data.collection}/${data.document.id}`;
+    const fileType = store[data.database].meta.persistence;
 
-  if (fileType === 'json') {
-    fs.writeFile(`${file}.${fileType}`, JSON.stringify(data.document));
-  } else {
-    fs.writeFile(`${file}.${fileType}`, yaml.safeDump(data.document));
+    if (fileType === 'json') {
+      fs.writeFile(`${file}.${fileType}`, JSON.stringify(data.document));
+    } else {
+      fs.writeFile(`${file}.${fileType}`, yaml.safeDump(data.document));
+    }
   }
 });
 
 // Handle updating a document.
 events.subscribe('document-updated', (data) => {
-  const file = `./data/${data.database}/${data.collection}/${data.document.id}`;
-  const fileType = store[data.database].meta.persistence;
+  if (store[data.database].meta.persistence) {
+    const file = `./data/${data.database}/${data.collection}/${data.document.id}`;
+    const fileType = store[data.database].meta.persistence;
 
-  if (fileType === 'json') {
-    fs.writeFile(`${file}.${fileType}`, JSON.stringify(data.document));
-  } else {
-    fs.writeFile(`${file}.${fileType}`, yaml.safeDump(data.document));
+    if (fileType === 'json') {
+      fs.writeFile(`${file}.${fileType}`, JSON.stringify(data.document));
+    } else {
+      fs.writeFile(`${file}.${fileType}`, yaml.safeDump(data.document));
+    }
   }
 });
 
 // Handle deleting a document.
 events.subscribe('document-deleted', (data) => {
-  const file = `./data/${data.database}/${data.collection}/${data.document.id}`;
-  const fileType = store[data.database].meta.persistence;
+  if (store[data.database].meta.persistence) {
+    const file = `./data/${data.database}/${data.collection}/${data.document.id}`;
+    const fileType = store[data.database].meta.persistence;
 
-  fs.unlink(`${file}.${fileType}`);
+    fs.unlink(`${file}.${fileType}`);
+  }
 });
 
 // Syncronously loads data into memory if it exists.
