@@ -39,6 +39,6 @@
     "aproba": "^1.1.1",
     "lodash": "^4.17.4",
     "randomstring": "^1.1.5",
-    "rx": "^4.1.0"
+    "rxjs": "^5.2.1-smooth"
   }
 }

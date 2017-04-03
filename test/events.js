@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const Rx = require('rx');
+const Rx = require('rxjs/Rx');
 
 const Events = require('../source/events');
 
