@@ -44,9 +44,8 @@ describe('collection', function () {
     });
 
     it('should send a document-inserted event', function (done) {
-      const inserted = mockCollection.subject('document-inserted');
-      const subscription = inserted.subscribe(() => {
-        subscription.unsubscribe();
+      const inserted = mockCollection.subject('document-inserted').subscribe(() => {
+        inserted.unsubscribe();
         done();
       });
 
@@ -101,9 +100,8 @@ describe('collection', function () {
     });
 
     it('should send a document-updated event', function (done) {
-      const inserted = mockCollection.subject('document-updated');
-      const subscription = inserted.subscribe(() => {
-        subscription.unsubscribe();
+      const updated = mockCollection.subject('document-updated').subscribe(() => {
+        updated.unsubscribe();
         done();
       });
 
@@ -129,9 +127,8 @@ describe('collection', function () {
     });
 
     it('should send a document-deleted event', function (done) {
-      const inserted = mockCollection.subject('document-deleted');
-      const subscription = inserted.subscribe(() => {
-        subscription.unsubscribe();
+      const deleted = mockCollection.subject('document-deleted').subscribe(() => {
+        deleted.unsubscribe();
         done();
       });
 
