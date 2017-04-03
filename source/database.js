@@ -2,7 +2,7 @@ const store = require('./store');
 const events = require('./events');
 const Collection = require('./collection');
 
-const create = (name, options = {}) => {
+const create = (name, options) => {
   store[name] = Object.assign(
     {
       meta: { name },
