@@ -38,7 +38,7 @@ const Update = function Update(id, data) {
 const Delete = function Delete(id) {
   validate('S', [id]);
   delete this.data[id];
-  this.subject('document-deleted').next();
+  this.subject('document-deleted').next(id);
 };
 
 module.exports = () => Object.assign({}, {
