@@ -1,7 +1,5 @@
 const store = require('./store');
-const mkdirp = require('mkdirp');
 
-mkdirp('./data');
 let defaultDb = 'default';
 
 const Database = require('./database');
