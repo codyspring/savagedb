@@ -42,6 +42,16 @@ describe('collection', function () {
       expect(newDoc.id.length).to.equal(32);
       expect(mockCollection.data[newDoc.id]).to.deep.equal(newDoc);
     });
+
+    it('should send a document-inserted event', function (done) {
+      const inserted = mockCollection.subject('document-inserted');
+      const subscription = inserted.subscribe(() => {
+        subscription.unsubscribe();
+        done();
+      });
+
+      mockCollection.insert({ foo: 'bar' });
+    });
   });
 
   describe('#read()', function () {
@@ -89,6 +99,17 @@ describe('collection', function () {
       expect(doc.id).to.equal(id);
       expect(doc.foo).to.equal('baz');
     });
+
+    it('should send a document-updated event', function (done) {
+      const inserted = mockCollection.subject('document-updated');
+      const subscription = inserted.subscribe(() => {
+        subscription.unsubscribe();
+        done();
+      });
+
+      const doc = mockCollection.insert({ foo: 'bar' });
+      mockCollection.update(doc.id, { bar: 'baz' });
+    });
   });
 
   describe('#delete()', function () {
@@ -105,6 +126,17 @@ describe('collection', function () {
       const doc = mockCollection.insert({ foo: 'bar' });
       mockCollection.delete(doc.id);
       expect(mockCollection[doc.id]).to.not.exist; // eslint-disable-line no-unused-expressions
+    });
+
+    it('should send a document-deleted event', function (done) {
+      const inserted = mockCollection.subject('document-deleted');
+      const subscription = inserted.subscribe(() => {
+        subscription.unsubscribe();
+        done();
+      });
+
+      const doc = mockCollection.insert({ foo: 'bar' });
+      mockCollection.delete(doc.id);
     });
   });
 });

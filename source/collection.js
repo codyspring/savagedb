@@ -14,7 +14,9 @@ const Insert = function Insert(data) {
 
   this.data[doc.id] = doc;
 
-  return doc;
+  this.subject('document-inserted').next(this.data[doc.id]);
+
+  return this.data[doc.id];
 };
 
 const Read = function Read(id) {
@@ -28,12 +30,15 @@ const Update = function Update(id, data) {
   if (!this.data[id]) return null;
   this.data[id] = Object.assign({}, this.data[id], data);
 
+  this.subject('document-updated').next(this.data[id]);
+
   return this.data[id];
 };
 
 const Delete = function Delete(id) {
   validate('S', [id]);
   delete this.data[id];
+  this.subject('document-deleted').next();
 };
 
 module.exports = () => Object.assign({}, {
@@ -48,9 +53,13 @@ module.exports = () => Object.assign({}, {
         read: Read,
         update: Update,
         delete: Delete,
-        data: {}
-      });
+        data: {},
+      }, Events());
     }
+
+    this.collections[name].subject('document-inserted');
+    this.collections[name].subject('document-updated');
+    this.collections[name].subject('document-deleted');
 
     return this.collections[name];
   }
