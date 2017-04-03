@@ -4,7 +4,7 @@ const Collection = require('./collection');
 const create = (name, options) => {
   store[name] = Object.assign(
     {
-      meta: { name },
+      name,
       data: {}
     },
     Collection()
