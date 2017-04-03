@@ -14,13 +14,12 @@ const Insert = function Insert(data, memOnly = false) {
 
   this[doc.id] = doc;
 
-  if (!memOnly) {
-    events.emit('document-created', {
-      database: this.meta.database,
-      collection: this.meta.name,
-      document: this[doc.id]
-    });
-  }
+  events.emit('document-created', {
+    database: this.meta.database,
+    collection: this.meta.name,
+    document: this[doc.id]
+  });
+
   return doc;
 };
 
@@ -67,7 +66,7 @@ module.exports = () => Object.assign({}, {
       });
     }
 
-    if (!memOnly) events.emit('collection-created', { db: this.meta.name, name });
+    events.emit('collection-created', { db: this.meta.name, name });
     return this.data[name];
   }
 });

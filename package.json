@@ -1,7 +1,7 @@
 {
   "name": "@playsavage/savagedb",
-  "version": "0.2.0",
-  "description": "In memory datastore with flat file persistence.",
+  "version": "0.2.1",
+  "description": "In memory datastore.",
   "main": "source/index.js",
   "scripts": {
     "test": "mocha --recursive",
@@ -37,10 +37,7 @@
   },
   "dependencies": {
     "aproba": "^1.1.1",
-    "graceful-fs": "^4.1.11",
-    "js-yaml": "^3.8.2",
     "lodash": "^4.17.4",
-    "mkdirp": "^0.5.1",
     "randomstring": "^1.1.5",
     "rx": "^4.1.0"
   }
