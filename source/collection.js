@@ -3,8 +3,8 @@ const validate = require('aproba');
 const Events = require('./events');
 const randomstring = require('randomstring').generate;
 
-const Insert = function Insert(data, memOnly = false) {
-  validate('OB|O', [data, memOnly]);
+const Insert = function Insert(data) {
+  validate('O', [data]);
   const doc = Object.assign({ id: randomstring() }, data);
 
   // Make sure the id is unique to the collection.
