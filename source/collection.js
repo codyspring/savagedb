@@ -37,8 +37,8 @@ const Delete = function Delete(id) {
 };
 
 module.exports = () => Object.assign({}, {
-  collection: function collection(name, memOnly = false) {
-    validate('SB|S', [name, memOnly]);
+  collection: function collection(name) {
+    validate('S', [name]);
 
     if (!this.data[name]) {
       this.data[name] = Object.assign({}, {
