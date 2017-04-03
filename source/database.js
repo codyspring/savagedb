@@ -5,7 +5,7 @@ const create = (name, options) => {
   store[name] = Object.assign(
     {
       name,
-      data: {}
+      collections: {}
     },
     Collection()
   );

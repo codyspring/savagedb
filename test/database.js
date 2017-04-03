@@ -7,8 +7,8 @@ describe('Database', function () {
     it('should return a database object', function () {
       const db = Database.create({}, 'Database-test');
       expect(db).to.be.an.instanceof(Object);
-      expect(db).to.have.ownProperty('data');
-      expect(db.data).to.deep.equal({});
+      expect(db).to.have.ownProperty('collections');
+      expect(db.collections).to.deep.equal({});
     });
   });
 });

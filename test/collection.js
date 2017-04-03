@@ -31,7 +31,7 @@ describe('collection', function () {
 
     it('should store the object in the collection', function () {
       const doc = mockCollection.insert({ foo: 'bar' });
-      expect(mockCollection[doc.id]).to.deep.equal(doc);
+      expect(mockCollection.data[doc.id]).to.deep.equal(doc);
     });
 
     it('should write a new object when trying to save an id that is already in use', function () {
@@ -40,7 +40,7 @@ describe('collection', function () {
       expect(newDoc.id).to.not.equal(doc.id);
       expect(newDoc.id).to.be.a('string');
       expect(newDoc.id.length).to.equal(32);
-      expect(mockCollection[newDoc.id]).to.deep.equal(newDoc);
+      expect(mockCollection.data[newDoc.id]).to.deep.equal(newDoc);
     });
   });
 

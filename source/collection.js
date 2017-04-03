@@ -8,48 +8,50 @@ const Insert = function Insert(data) {
   const doc = Object.assign({ id: randomstring() }, data);
 
   // Make sure the id is unique to the collection.
-  while (this[doc.id]) {
+  while (this.data[doc.id]) {
     doc.id = randomstring();
   }
 
-  this[doc.id] = doc;
+  this.data[doc.id] = doc;
 
   return doc;
 };
 
 const Read = function Read(id) {
   validate('Z|S', [id]);
-  if (id) return this[id] || null;
-  return _.values(this);
+  if (id) return this.data[id] || null;
+  return _.values(this.data);
 };
 
 const Update = function Update(id, data) {
   validate('SO', [id, data]);
-  if (!this[id]) return null;
-  this[id] = Object.assign({}, this[id], data);
+  if (!this.data[id]) return null;
+  this.data[id] = Object.assign({}, this.data[id], data);
 
-  return this[id];
+  return this.data[id];
 };
 
 const Delete = function Delete(id) {
   validate('S', [id]);
-  delete this[id];
+  delete this.data[id];
 };
 
 module.exports = () => Object.assign({}, {
   collection: function collection(name) {
     validate('S', [name]);
 
-    if (!this.data[name]) {
-      this.data[name] = Object.assign({}, {
-        meta: { database: this.meta.name, name },
+    if (!this.collections[name]) {
+      this.collections[name] = Object.assign({}, {
+        database: this.name,
+        name,
         insert: Insert,
         read: Read,
         update: Update,
-        delete: Delete
+        delete: Delete,
+        data: {}
       });
     }
 
-    return this.data[name];
+    return this.collections[name];
   }
 });

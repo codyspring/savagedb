@@ -6,8 +6,8 @@ describe('SavageDB', function () {
   it('should return a database object', function () {
     const db = SavageDB();
     expect(db).to.be.an.instanceof(Object);
-    expect(db).to.have.ownProperty('data');
-    expect(db.data).to.deep.equal({});
+    expect(db).to.have.ownProperty('collections');
+    expect(db.collections).to.deep.equal({});
   });
 
   describe('#setDefault()', function () {
@@ -24,7 +24,7 @@ describe('SavageDB', function () {
       const db = SavageDB('test'); // eslint-disable-line no-unused-vars
       SavageDB.setDefault('test');
       const testDb = SavageDB();
-      expect(testDb).to.have.ownProperty('data');
+      expect(testDb).to.have.ownProperty('collections');
     });
   });
 
