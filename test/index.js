@@ -10,6 +10,15 @@ describe('SavageDB', function () {
     expect(db.collections).to.deep.equal({});
   });
 
+  it('should send a database-created event', function (done) {
+    const created = SavageDB.subject('database-created').subscribe(() => {
+      created.unsubscribe();
+      done();
+    });
+
+    SavageDB('foo');
+  });
+
   describe('#setDefault()', function () {
     it('should error if the database being set is not available', function (done) {
       try {
