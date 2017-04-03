@@ -1,6 +1,6 @@
 {
   "name": "@playsavage/savagedb",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "In memory datastore.",
   "main": "source/index.js",
   "scripts": {
