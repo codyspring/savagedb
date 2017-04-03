@@ -6,8 +6,17 @@ describe('SavageDB', function () {
   it('should return a database object', function () {
     const db = SavageDB();
     expect(db).to.be.an.instanceof(Object);
-    expect(db).to.have.ownProperty('data');
-    expect(db.data).to.deep.equal({});
+    expect(db).to.have.ownProperty('collections');
+    expect(db.collections).to.deep.equal({});
+  });
+
+  it('should send a database-created event', function (done) {
+    const created = SavageDB.subject('database-created').subscribe(() => {
+      created.unsubscribe();
+      done();
+    });
+
+    SavageDB('foo');
   });
 
   describe('#setDefault()', function () {
@@ -24,7 +33,7 @@ describe('SavageDB', function () {
       const db = SavageDB('test'); // eslint-disable-line no-unused-vars
       SavageDB.setDefault('test');
       const testDb = SavageDB();
-      expect(testDb).to.have.ownProperty('data');
+      expect(testDb).to.have.ownProperty('collections');
     });
   });
 
@@ -43,6 +52,17 @@ describe('SavageDB', function () {
       const db = SavageDB();
       const collection = db.collection('test');
       expect(collection).to.be.an('object');
+    });
+
+    it('should send a collection-created event', function (done) {
+      const db = SavageDB();
+
+      const created = db.subject('collection-created').subscribe(() => {
+        created.unsubscribe();
+        done();
+      });
+
+      db.collection('foo');
     });
   });
 });

@@ -1,72 +1,67 @@
 const _ = require('lodash');
 const validate = require('aproba');
-const events = require('./events');
+const Events = require('./events');
 const randomstring = require('randomstring').generate;
 
-const Insert = function Insert(data, memOnly = false) {
-  validate('OB|O', [data, memOnly]);
+const Insert = function Insert(data) {
+  validate('O', [data]);
   const doc = Object.assign({ id: randomstring() }, data);
 
   // Make sure the id is unique to the collection.
-  while (this[doc.id]) {
+  while (this.data[doc.id]) {
     doc.id = randomstring();
   }
 
-  this[doc.id] = doc;
+  this.data[doc.id] = doc;
 
-  events.emit('document-created', {
-    database: this.meta.database,
-    collection: this.meta.name,
-    document: this[doc.id]
-  });
+  this.subject('document-inserted').next(this.data[doc.id]);
 
-  return doc;
+  return this.data[doc.id];
 };
 
 const Read = function Read(id) {
   validate('Z|S', [id]);
-  if (id) return this[id] || null;
-  return _.values(this);
+  if (id) return this.data[id] || null;
+  return _.values(this.data);
 };
 
 const Update = function Update(id, data) {
   validate('SO', [id, data]);
-  if (!this[id]) return null;
-  this[id] = Object.assign({}, this[id], data);
+  if (!this.data[id]) return null;
+  this.data[id] = Object.assign({}, this.data[id], data);
 
-  events.emit('document-updated', {
-    database: this.meta.database,
-    collection: this.meta.name,
-    document: this[id]
-  });
-  return this[id];
+  this.subject('document-updated').next(this.data[id]);
+
+  return this.data[id];
 };
 
 const Delete = function Delete(id) {
   validate('S', [id]);
-  delete this[id];
-  events.emit('document-deleted', {
-    database: this.meta.database,
-    collection: this.meta.name,
-    document: id
-  });
+  delete this.data[id];
+  this.subject('document-deleted').next();
 };
 
 module.exports = () => Object.assign({}, {
-  collection: function collection(name, memOnly = false) {
-    validate('SB|S', [name, memOnly]);
+  collection: function collection(name) {
+    validate('S', [name]);
 
-    if (!this.data[name]) {
-      this.data[name] = Object.assign({}, {
-        meta: { database: this.meta.name, name },
+    if (!this.collections[name]) {
+      this.collections[name] = Object.assign({}, {
+        database: this.name,
+        name,
         insert: Insert,
         read: Read,
         update: Update,
-        delete: Delete
-      });
+        delete: Delete,
+        data: {},
+      }, Events());
     }
 
-    events.emit('collection-created', { db: this.meta.name, name });
-    return this.data[name];
+    this.collections[name].subject('document-inserted');
+    this.collections[name].subject('document-updated');
+    this.collections[name].subject('document-deleted');
+
+    this.subject('collection-created').next(name);
+    return this.collections[name];
   }
 });

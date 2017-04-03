@@ -31,7 +31,7 @@ describe('collection', function () {
 
     it('should store the object in the collection', function () {
       const doc = mockCollection.insert({ foo: 'bar' });
-      expect(mockCollection[doc.id]).to.deep.equal(doc);
+      expect(mockCollection.data[doc.id]).to.deep.equal(doc);
     });
 
     it('should write a new object when trying to save an id that is already in use', function () {
@@ -40,7 +40,16 @@ describe('collection', function () {
       expect(newDoc.id).to.not.equal(doc.id);
       expect(newDoc.id).to.be.a('string');
       expect(newDoc.id.length).to.equal(32);
-      expect(mockCollection[newDoc.id]).to.deep.equal(newDoc);
+      expect(mockCollection.data[newDoc.id]).to.deep.equal(newDoc);
+    });
+
+    it('should send a document-inserted event', function (done) {
+      const inserted = mockCollection.subject('document-inserted').subscribe(() => {
+        inserted.unsubscribe();
+        done();
+      });
+
+      mockCollection.insert({ foo: 'bar' });
     });
   });
 
@@ -89,6 +98,16 @@ describe('collection', function () {
       expect(doc.id).to.equal(id);
       expect(doc.foo).to.equal('baz');
     });
+
+    it('should send a document-updated event', function (done) {
+      const updated = mockCollection.subject('document-updated').subscribe(() => {
+        updated.unsubscribe();
+        done();
+      });
+
+      const doc = mockCollection.insert({ foo: 'bar' });
+      mockCollection.update(doc.id, { bar: 'baz' });
+    });
   });
 
   describe('#delete()', function () {
@@ -105,6 +124,16 @@ describe('collection', function () {
       const doc = mockCollection.insert({ foo: 'bar' });
       mockCollection.delete(doc.id);
       expect(mockCollection[doc.id]).to.not.exist; // eslint-disable-line no-unused-expressions
+    });
+
+    it('should send a document-deleted event', function (done) {
+      const deleted = mockCollection.subject('document-deleted').subscribe(() => {
+        deleted.unsubscribe();
+        done();
+      });
+
+      const doc = mockCollection.insert({ foo: 'bar' });
+      mockCollection.delete(doc.id);
     });
   });
 });
