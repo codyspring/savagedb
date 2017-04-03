@@ -37,10 +37,7 @@
   },
   "dependencies": {
     "aproba": "^1.1.1",
-    "graceful-fs": "^4.1.11",
-    "js-yaml": "^3.8.2",
     "lodash": "^4.17.4",
-    "mkdirp": "^0.5.1",
     "randomstring": "^1.1.5",
     "rx": "^4.1.0"
   }
