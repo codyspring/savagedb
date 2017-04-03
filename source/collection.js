@@ -61,7 +61,7 @@ module.exports = () => Object.assign({}, {
     this.collections[name].subject('document-updated');
     this.collections[name].subject('document-deleted');
 
-    this.subject('collection-created').next();
+    this.subject('collection-created').next(name);
     return this.collections[name];
   }
 });
