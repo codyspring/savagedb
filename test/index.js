@@ -44,5 +44,16 @@ describe('SavageDB', function () {
       const collection = db.collection('test');
       expect(collection).to.be.an('object');
     });
+
+    it('should send a collection-created event', function (done) {
+      const db = SavageDB();
+
+      const created = db.subject('collection-created').subscribe(() => {
+        created.unsubscribe();
+        done();
+      });
+
+      db.collection('foo');
+    });
   });
 });

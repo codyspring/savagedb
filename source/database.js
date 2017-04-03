@@ -1,4 +1,5 @@
 const store = require('./store');
+const Events = require('./events');
 const Collection = require('./collection');
 
 const create = (name, options) => {
@@ -7,8 +8,11 @@ const create = (name, options) => {
       name,
       collections: {}
     },
-    Collection()
+    Collection(),
+    Events()
   );
+
+  store[name].subject('collection-created');
 
   return store[name];
 };
