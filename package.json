@@ -1,7 +1,7 @@
 {
   "name": "@playsavage/savagedb",
   "version": "0.2.0",
-  "description": "In memory datastore with flat file persistence.",
+  "description": "In memory datastore.",
   "main": "source/index.js",
   "scripts": {
     "test": "mocha --recursive",
