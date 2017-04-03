@@ -1,5 +1,4 @@
 const store = require('./store');
-const events = require('./events');
 const Collection = require('./collection');
 
 const create = (name, options) => {
@@ -11,7 +10,6 @@ const create = (name, options) => {
     Collection()
   );
 
-  // events.emit('database-created', name);
   return store[name];
 };
 
