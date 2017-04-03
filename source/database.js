@@ -11,7 +11,7 @@ const create = (name, options) => {
     Collection()
   );
 
-  events.emit('database-created', name);
+  // events.emit('database-created', name);
   return store[name];
 };
 

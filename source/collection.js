@@ -14,11 +14,11 @@ const Insert = function Insert(data, memOnly = false) {
 
   this[doc.id] = doc;
 
-  events.emit('document-created', {
-    database: this.meta.database,
-    collection: this.meta.name,
-    document: this[doc.id]
-  });
+  // events.emit('document-created', {
+  //   database: this.meta.database,
+  //   collection: this.meta.name,
+  //   document: this[doc.id]
+  // });
 
   return doc;
 };
@@ -34,22 +34,22 @@ const Update = function Update(id, data) {
   if (!this[id]) return null;
   this[id] = Object.assign({}, this[id], data);
 
-  events.emit('document-updated', {
-    database: this.meta.database,
-    collection: this.meta.name,
-    document: this[id]
-  });
+  // events.emit('document-updated', {
+  //   database: this.meta.database,
+  //   collection: this.meta.name,
+  //   document: this[id]
+  // });
   return this[id];
 };
 
 const Delete = function Delete(id) {
   validate('S', [id]);
   delete this[id];
-  events.emit('document-deleted', {
-    database: this.meta.database,
-    collection: this.meta.name,
-    document: id
-  });
+  // events.emit('document-deleted', {
+  //   database: this.meta.database,
+  //   collection: this.meta.name,
+  //   document: id
+  // });
 };
 
 module.exports = () => Object.assign({}, {
@@ -66,7 +66,7 @@ module.exports = () => Object.assign({}, {
       });
     }
 
-    events.emit('collection-created', { db: this.meta.name, name });
+    // events.emit('collection-created', { db: this.meta.name, name });
     return this.data[name];
   }
 });
