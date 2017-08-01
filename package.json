@@ -4,7 +4,7 @@
   "description": "In memory datastore.",
   "main": "source/index.js",
   "scripts": {
-    "test": "mocha --recursive"
+    "test": "standard && mocha --recursive"
   },
   "repository": {
     "type": "git",
@@ -31,7 +31,8 @@
     "eslint-plugin-react": "^6.10.0",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
-    "mocha-lcov-reporter": "^1.3.0"
+    "mocha-lcov-reporter": "^1.3.0",
+    "standard": "^10.0.2"
   },
   "dependencies": {
     "aproba": "^1.1.1",
