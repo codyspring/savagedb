@@ -1,19 +1,15 @@
 # SavageDB
-[![Build Status](https://travis-ci.org/playsavage/savagedb.svg?branch=master)](https://travis-ci.org/playsavage/savagedb)
-[![Coverage Status](https://coveralls.io/repos/github/playsavage/savagedb/badge.svg?branch=master)](https://coveralls.io/github/playsavage/savagedb?branch=master)
-[![NSP Status](https://nodesecurity.io/orgs/playsavage/projects/fe1645c5-a071-4151-93c1-02364fbfe84e/badge)](https://nodesecurity.io/orgs/playsavage/projects/fe1645c5-a071-4151-93c1-02364fbfe84e)
-
 In-memory datastore.
 
 ## Install
 Through npm...
 ```bash
-npm install @playsavage/savagedb
+npm install --save savagedb
 ```
 
 ## Usage
 ```js
-const savagedb = require('@playsavage/savagedb');
+const savagedb = require('savagedb');
 
 // Create a database.
 const db = savagedb('mydb');
@@ -40,7 +36,7 @@ The module itself is a function to create databases. If nothing is passed to use
 #### Change the default db
 This is a convenience method so if you're only using one DB all the time it's easier to get going in different places.
 ```js
-const savagedb = require('@playsavage/savagedb');
+const savagedb = require('savagedb');
 const db = savagedb('mydb');
 
 // Set it.
