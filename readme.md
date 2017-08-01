@@ -1,8 +1,4 @@
 # SavageDB
-[![Build Status](https://travis-ci.org/playsavage/savagedb.svg?branch=master)](https://travis-ci.org/playsavage/savagedb)
-[![Coverage Status](https://coveralls.io/repos/github/playsavage/savagedb/badge.svg?branch=master)](https://coveralls.io/github/playsavage/savagedb?branch=master)
-[![NSP Status](https://nodesecurity.io/orgs/playsavage/projects/fe1645c5-a071-4151-93c1-02364fbfe84e/badge)](https://nodesecurity.io/orgs/playsavage/projects/fe1645c5-a071-4151-93c1-02364fbfe84e)
-
 In-memory datastore.
 
 ## Install
