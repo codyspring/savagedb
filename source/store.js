@@ -1,3 +1,3 @@
-const datastore = {};
+const datastore = {}
 
-module.exports = datastore;
+module.exports = datastore
