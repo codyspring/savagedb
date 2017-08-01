@@ -1,12 +1,12 @@
-const Rx = require('rxjs/Rx');
+const Rx = require('rxjs/Rx')
 
 module.exports = () => Object.assign({}, {
   ownSubjects: {},
-  subject: function subject(name) {
+  subject: function subject (name) {
     if (!this.ownSubjects[name]) {
-      this.ownSubjects[name] = new Rx.Subject();
+      this.ownSubjects[name] = new Rx.Subject()
     }
 
-    return this.ownSubjects[name];
-  },
-});
+    return this.ownSubjects[name]
+  }
+})
