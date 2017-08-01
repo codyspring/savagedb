@@ -1,4 +1,3 @@
-const expect = require('chai').expect
 const Rx = require('rxjs/Rx')
 
 const Events = require('../source/events')
@@ -17,8 +16,8 @@ describe('::Events', function () {
       Events()
     )
 
-    expect(mockDb).to.have.ownProperty('ownSubjects')
-    expect(mockDb.ownSubjects).to.deep.equal({})
+    expect(mockDb).toHaveProperty('ownSubjects')
+    expect(mockDb.ownSubjects).toMatchObject({})
   })
 
   describe('#subject()', function () {
@@ -29,7 +28,7 @@ describe('::Events', function () {
       )
 
       const foo = mockDb.subject('foo')
-      expect(foo).to.be.an.instanceOf(Rx.Subject)
+      expect(foo).toBeInstanceOf(Rx.Subject)
     })
 
     it('should add new Rx subjects to it\'s ownSubjects dictionary', function () {
@@ -39,7 +38,7 @@ describe('::Events', function () {
       )
 
       const foo = mockDb.subject('foo')
-      expect(mockDb.ownSubjects.foo).to.equal(foo)
+      expect(mockDb.ownSubjects.foo).toBe(foo)
     })
 
     it('should return a current Rx subject if it exists', function () {
@@ -50,7 +49,7 @@ describe('::Events', function () {
 
       const foo = mockDb.subject('foo')
       const bar = mockDb.subject('foo')
-      expect(foo).to.equal(bar)
+      expect(foo).toBe(bar)
     })
   })
 })

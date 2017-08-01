@@ -1,13 +1,11 @@
-const expect = require('chai').expect
-
 const SavageDB = require('../source')
 
 describe('SavageDB', function () {
   it('should return a database object', function () {
     const db = SavageDB()
-    expect(db).to.be.an.instanceof(Object)
-    expect(db).to.have.ownProperty('collections')
-    expect(db.collections).to.deep.equal({})
+    expect(db).toBeInstanceOf(Object)
+    expect(db).toHaveProperty('collections')
+    expect(db.collections).toMatchObject({})
   })
 
   it('should send a database-created event', function (done) {
@@ -33,7 +31,7 @@ describe('SavageDB', function () {
       const db = SavageDB('test') // eslint-disable-line no-unused-vars
       SavageDB.setDefault('test')
       const testDb = SavageDB()
-      expect(testDb).to.have.ownProperty('collections')
+      expect(testDb).toHaveProperty('collections')
     })
   })
 
@@ -51,7 +49,7 @@ describe('SavageDB', function () {
     it('should return a collection object, creating one if it doesn\'t exist ', function () {
       const db = SavageDB()
       const collection = db.collection('test')
-      expect(collection).to.be.an('object')
+      expect(collection).toBeInstanceOf(Object)
     })
 
     it('should send a collection-created event', function (done) {

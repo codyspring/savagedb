@@ -1,4 +1,3 @@
-const expect = require('chai').expect
 const randomstring = require('randomstring').generate
 const database = require('../source')
 
@@ -18,29 +17,27 @@ describe('collection', function () {
 
     it('should return the object with an id', function () {
       const doc = mockCollection.insert({ id: '123', foo: 'bar' })
-      expect(doc).to.deep.equal({ id: '123', foo: 'bar' })
+      expect(doc).toMatchObject({ id: '123', foo: 'bar' })
     })
 
     it('should generate an id when none is supplied', function () {
       const doc = mockCollection.insert({ foo: 'bar' })
-      expect(doc).to.be.an('object')
-      expect(doc.id).to.be.a('string')
-      expect(doc.id.length).to.equal(32)
-      expect(doc.foo).to.equal('bar')
+      expect(doc).toBeInstanceOf(Object)
+      expect(doc.id.length).toBe(32)
+      expect(doc.foo).toBe('bar')
     })
 
     it('should store the object in the collection', function () {
       const doc = mockCollection.insert({ foo: 'bar' })
-      expect(mockCollection.data[doc.id]).to.deep.equal(doc)
+      expect(mockCollection.data[doc.id]).toMatchObject(doc)
     })
 
     it('should write a new object when trying to save an id that is already in use', function () {
       const doc = mockCollection.insert({ foo: 'bar' })
       const newDoc = mockCollection.insert({ id: doc.id, bar: 'baz' })
-      expect(newDoc.id).to.not.equal(doc.id)
-      expect(newDoc.id).to.be.a('string')
-      expect(newDoc.id.length).to.equal(32)
-      expect(mockCollection.data[newDoc.id]).to.deep.equal(newDoc)
+      expect(newDoc.id).not.toBe(doc.id)
+      expect(newDoc.id.length).toBe(32)
+      expect(mockCollection.data[newDoc.id]).toMatchObject(newDoc)
     })
 
     it('should send a document-inserted event', function (done) {
@@ -58,19 +55,19 @@ describe('collection', function () {
       mockCollection.insert({ foo1: 'bar1' })
       mockCollection.insert({ foo2: 'bar2' })
       const docs = mockCollection.read()
-      expect(docs).to.be.an('array')
-      expect(docs.length).to.be.at.least(2)
+      expect(docs).toBeInstanceOf(Array)
+      expect(docs.length).toBeGreaterThanOrEqual(2)
     })
 
     it('should return a single document when an id is passed', function () {
       const doc = mockCollection.insert({ foo: 'bar' })
       const again = mockCollection.read(doc.id)
-      expect(again.id).to.equal(doc.id)
+      expect(again.id).toBe(doc.id)
     })
 
     it('should return null when an id is passed but not in the collection', function () {
       const doc = mockCollection.read('some-random-id')
-      expect(doc).to.equal(null)
+      expect(doc).toBe(null)
     })
   })
 
@@ -86,17 +83,17 @@ describe('collection', function () {
 
     it('should return null when no object was founf to update', function () {
       const doc = mockCollection.update('not-here', { foo: 'baz' })
-      expect(doc).to.equal(null)
+      expect(doc).toBe(null)
     })
 
     it('should update an object by id', function () {
       let doc = mockCollection.insert({ foo: 'bar' })
       const id = doc.id
-      expect(doc.foo).to.equal('bar')
+      expect(doc.foo).toBe('bar')
 
       doc = mockCollection.update(doc.id, { foo: 'baz' })
-      expect(doc.id).to.equal(id)
-      expect(doc.foo).to.equal('baz')
+      expect(doc.id).toBe(id)
+      expect(doc.foo).toBe('baz')
     })
 
     it('should send a document-updated event', function (done) {
@@ -123,7 +120,7 @@ describe('collection', function () {
     it('should delete an object by id', function () {
       const doc = mockCollection.insert({ foo: 'bar' })
       mockCollection.delete(doc.id)
-      expect(mockCollection[doc.id]).to.not.exist // eslint-disable-line no-unused-expressions
+      expect(mockCollection[doc.id]).toBeFalsy()
     })
 
     it('should send a document-deleted event', function (done) {

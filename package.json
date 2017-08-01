@@ -4,7 +4,7 @@
   "description": "In memory datastore.",
   "main": "source/index.js",
   "scripts": {
-    "test": "standard && mocha --recursive"
+    "test": "standard && jest"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,14 @@
   "engineStrict": true,
   "engines": {
     "node": ">6.0.0"
+  },
+  "standard": {
+    "globals": [
+      "jest",
+      "describe",
+      "it",
+      "expect"
+    ]
   },
   "devDependencies": {
     "jest": "^20.0.4",
