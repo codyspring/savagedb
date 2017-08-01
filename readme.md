@@ -8,12 +8,12 @@ In-memory datastore.
 ## Install
 Through npm...
 ```bash
-npm install @playsavage/savagedb
+npm install --save savagedb
 ```
 
 ## Usage
 ```js
-const savagedb = require('@playsavage/savagedb');
+const savagedb = require('savagedb');
 
 // Create a database.
 const db = savagedb('mydb');
@@ -40,7 +40,7 @@ The module itself is a function to create databases. If nothing is passed to use
 #### Change the default db
 This is a convenience method so if you're only using one DB all the time it's easier to get going in different places.
 ```js
-const savagedb = require('@playsavage/savagedb');
+const savagedb = require('savagedb');
 const db = savagedb('mydb');
 
 // Set it.

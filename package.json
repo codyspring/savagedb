@@ -1,5 +1,5 @@
 {
-  "name": "@playsavage/savagedb",
+  "name": "savagedb",
   "version": "0.3.0",
   "description": "In memory datastore.",
   "main": "source/index.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/playsavage/savagedb.git"
+    "url": "git+https://github.com/codyspring/savagedb.git"
   },
   "author": "Cody Spring <codyspring@me.com> (https://codyspring.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/playsavage/savagedb/issues"
+    "url": "https://github.com/codyspring/savagedb/issues"
   },
-  "homepage": "https://github.com/playsavage/savagedb#readme",
+  "homepage": "https://github.com/codyspring/savagedb#readme",
   "engineStrict": true,
   "engines": {
     "node": ">6.0.0"
